@@ -8,15 +8,15 @@ pygame.init()
 running = True
 global width
 global height
-width = 400
-height = 400
+width = 800
+height = width
 
 window = pygame.display.set_mode((width, height))
 snake_speed = 1
 
 pygame.display.set_caption("Snake")
 background_color = (46, 153, 37)  # White color
-snake_color = (0, 0, 0)  # White color
+snake_color = (0, 0, 0)  # BAKCKL;S[] color
 
 
 class snake():
