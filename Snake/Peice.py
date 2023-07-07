@@ -30,14 +30,14 @@ class pee():
     def getRect(self):
         return pygame.Rect(self.xpos, self.ypos, self.size, self.size)
 
-    def move(self, up, down, left, right):
-        if (up):
+    def move(self, list):
+        if list[0]:
             self.ypos += self.moveCheck(self.ypos, True)
-        elif (down):
+        elif list[1]:
             self.ypos += self.moveCheck(self.ypos, False)
-        elif (left):
+        elif list[2]:
             self.xpos += self.moveCheck(self.xpos, True)
-        elif (right):
+        elif list[3]:
             self.xpos += self.moveCheck(self.xpos, False)
 
     
