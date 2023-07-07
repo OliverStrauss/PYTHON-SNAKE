@@ -25,10 +25,10 @@ class pee():
 
     def move(self, up, down, left, right):
         if (up):
-            self.ypos += 1
+            self.ypos += 0.1
         elif (down):
-            self.ypos += 1
+            self.ypos -= 0.1
         elif (left):
-            self.xpos += 1
+            self.xpos -= 0.1
         elif (right):
-            self.xpos += 1
+            self.xpos += 0.1
