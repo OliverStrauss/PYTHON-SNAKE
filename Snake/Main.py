@@ -1,6 +1,7 @@
 import pygame
 import random
 from Peice import pee
+import sys
 
 # Initialize Pygame
 pygame.init()
@@ -27,20 +28,19 @@ right = False
 
 directions = [up, down, left, right]
 
-class food():
-   
 
+class food():
     def __init__(self):
-        self.fxpos = random.randint(0, 20) * 40
-        self.fypos = random.randint(0, 20) * 40
+        self.fxpos = random.randint(1, 19) * 40
+        self.fypos = random.randint(1, 19) * 40
         self.eaten = False
 
     def getfx(self):
         return self.fxpos
-    
 
     def seteaten(self):
-        self.eaten=True
+        print("I have been eaten T_T")
+        self.eaten = True
 
     def getfy(self):
         return self.fypos
@@ -49,21 +49,48 @@ class food():
         if not self.eaten:
             red = (240, 5, 5)
             pygame.draw.rect(window, red, pygame.Rect(self.fxpos, self.fypos, 40, 40))
+        if self.eaten:
+            self.respawn()
+
+    def respawn(self):
+        self.__init__()
+
+    def __repr__(self):
+        return f"{self.fxpos} {self.fypos}"
 
 
-class snake():
+class Snake():
+    def __init__(self):
+        self.head = pee(width / 2, height / 2)
+        self.old_placements = []
+        self.body = []
 
-    def moveSnake(snake_list):
-        for p in snake_list:
-            p.move(directions)
+    def moveSnake(self):
+        self.head.move(directions)
+        self.old_placements.append(self.head.get_pos())
+        self.check_size()
+        counter = 0
+        for piece in self.body:
+            piece.set_pos(self.old_placements[counter])
+            counter += 1
+            if self.head.get_pos() == piece.get_pos():
+                pygame.quit()
+    
+    def check_size(self):
+        print(self.old_placements)
+        if len(self.old_placements) > len(self.body) + 1:
+            self.old_placements.pop(0)
 
-    def printSnake(snake_list):
-        for p in snake_list:
-            pygame.draw.rect(window, snake_color, p.getRect())
+    def printSnake(self):
+        pygame.draw.rect(window, snake_color, self.head.getRect())
+        for piece in self.body:
+            pygame.draw.rect(window, snake_color, piece.getRect())
+
+    def add_piece(self):
+        self.body.append(pee(0, 0))
 
 
-head = pee(width / 2, height / 2)
-snake_list = [head]
+snake = Snake()
 
 
 def change_direction(direction_index):
@@ -75,6 +102,7 @@ def change_direction(direction_index):
             directions[index] = False
 
     directions[direction_index] = True
+
 
 apple = food()
 while running:
@@ -91,6 +119,9 @@ while running:
                 change_direction(2)
             if event.key == pygame.K_d:
                 change_direction(3)
+            if event.key == pygame.K_SPACE:
+                print(snake.head)
+                print(apple)
 
     dx = 0
     dy = 0
@@ -99,16 +130,15 @@ while running:
 
     window.fill(background_color)
     dist = 40
-    print(head.getX, head.getY)
-    print(food.getfx,food.getfy)
-    if(head.getX == food.getfx and head.getY == food.getfy):
-        
+
+    if (snake.head.xpos == apple.getfx() and snake.head.ypos == apple.getfy()):
         apple.seteaten()
+        snake.add_piece()
 
     apple.printfood()
 
-    snake.moveSnake(snake_list)
-    snake.printSnake(snake_list)
+    snake.moveSnake()
+    snake.printSnake()
 
     pygame.display.update()
     clock.tick(7)
