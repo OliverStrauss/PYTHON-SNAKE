@@ -2,47 +2,39 @@ import pygame
 
 
 class pee():
-   xpos = 0
-   ypos = 0
-   size = 0
+    xpos = 0
+    ypos = 0
+    size = 0
 
-
-   def __init__(self, x, y):
+    def __init__(self, x, y):
         self.xpos = x
         self.ypos = y
         self.size = 40
 
-   def moveCheck(pos,isdown):
-       if pos>800 or pos<0 :
-           return 0 
-       
-       if isdown:
-            return -0.1
-       else:
-           return -.1
+    def moveCheck(self, pos, isdown):
+        if int(pos) >= (800 - self.size) or int(pos) <= (0):
+            pygame.quit()
 
+        return -0.1 if isdown else 0.1
 
-
-
-   def getX(self):
+    def getX(self):
         return self.xpos
 
-   def getY(self):
+    def getY(self):
         return self.ypos
 
-   def getSize(self):
+    def getSize(self):
         return self.size
 
-   def getRect(self):
+    def getRect(self):
         return pygame.Rect(self.xpos, self.ypos, self.size, self.size)
 
-   
-   def move(self, up, down, left, right):
+    def move(self, up, down, left, right):
         if (up):
-            self.ypos -= self.moveCheck(self.ypos,True)
+            self.ypos += self.moveCheck(self.ypos, True)
         elif (down):
-            self.ypos += 0.1
+            self.ypos += self.moveCheck(self.ypos, False)
         elif (left):
-            self.xpos -= 0.1
+            self.xpos += self.moveCheck(self.xpos, True)
         elif (right):
-            self.xpos += 0.1
+            self.xpos += self.moveCheck(self.xpos, False)
