@@ -12,12 +12,13 @@ class pee():
         self.size = 40
 
     def moveCheck(self, pos, isdown):
-        distance = 20
+        distance = 40
         if int(pos) >= (800 - self.size) or int(pos) <= (0):
             pygame.quit()
 
         return -distance if isdown else distance
 
+    
     def getX(self):
         return self.xpos
 

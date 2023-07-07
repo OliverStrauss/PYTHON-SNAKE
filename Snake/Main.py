@@ -28,22 +28,25 @@ right = False
 directions = [up, down, left, right]
 
 class food():
-    eaten = False
-    fxpos = 0
-    fypos = 0
+   
 
     def __init__(self):
         self.fxpos = random.randint(0, 20) * 40
         self.fypos = random.randint(0, 20) * 40
+        self.eaten = False
 
     def getfx(self):
         return self.fxpos
+    
+
+    def seteaten(self):
+        self.eaten=True
 
     def getfy(self):
         return self.fypos
 
     def printfood(self):
-        if self.eaten:
+        if not self.eaten:
             red = (240, 5, 5)
             pygame.draw.rect(window, red, pygame.Rect(self.fxpos, self.fypos, 40, 40))
 
@@ -73,9 +76,8 @@ def change_direction(direction_index):
 
     directions[direction_index] = True
 
-
+apple = food()
 while running:
-    apple = food()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -97,7 +99,11 @@ while running:
 
     window.fill(background_color)
     dist = 40
-    # if(head.getX == food.getfx or head.getY == food.getfy):
+    print(head.getX, head.getY)
+    print(food.getfx,food.getfy)
+    if(head.getX == food.getfx and head.getY == food.getfy):
+        
+        apple.seteaten()
 
     apple.printfood()
 
