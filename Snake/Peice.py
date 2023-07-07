@@ -1,10 +1,10 @@
-xpos = 0
-ypos = 0
-size = 0
 import pygame
 
 
 class pee():
+    xpos = 0
+    ypos = 0
+    size = 0
 
     def __init__(self, x, y):
         self.xpos = x
@@ -12,16 +12,16 @@ class pee():
         self.size = 20
 
     def getX(self):
-        return xpos
+        return self.xpos
 
     def getY(self):
-        return ypos
+        return self.ypos
 
     def getSize(self):
-        return size
+        return self.size
 
     def getRect(self):
-        return pygame.Rect(self.xpos, ypos, size, size)
+        return pygame.Rect(self.xpos, self.ypos, self.size, self.size)
 
     def move(self, up, down, left, right):
         if (up):
